@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOUL&SPICE — Anambra State University, Uli Campus</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0704;
+    --deep: #1a0e06;
+    --rust: #c8420f;
+    --amber: #e8891a;
+    --gold: #f5c842;
+    --cream: #fdf3e3;
+    --warm-white: #fff8ef;
+    --muted: #8a7060;
+    --card-bg: #1e1208;
+    --border: rgba(232,137,26,0.2);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,66,15,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 50% at 80% 100%, rgba(232,137,26,0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 10% 80%, rgba(245,200,66,0.1) 0%, transparent 50%),
+      linear-gradient(180deg, #0a0704 0%, #1a0e06 100%);
+  }
+
+  .hero-spice-ring {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    border: 1px solid rgba(232,137,26,0.08);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: spinRing 40s linear infinite;
+  }
+
+  .hero-spice-ring::after {
+    content: '';
+    position: absolute;
+    width: 900px;
+    height: 900px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,66,15,0.05);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @keyframes spinRing {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .hero-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 18vw, 14rem);
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-title span {
+    display: block;
+    color: var(--rust);
+    -webkit-text-stroke: 2px var(--rust);
+  }
+
+  .hero-amp {
+    color: var(--amber);
+    -webkit-text-stroke: 0;
+  }
+
+  .hero-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    color: var(--muted);
+    margin-top: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .hero-location svg { color: var(--amber); }
+
+  .hero-cta {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1s forwards;
+  }
+
+  .btn-primary {
+    background: var(--rust);
+    color: var(--cream);
+    border: none;
+    padding: 0.9rem 2.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .btn-primary:hover { background: var(--amber); transform: translateY(-2px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid var(--border);
+    padding: 0.9rem 2.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SCROLL INDICATOR ── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    animation: bounce 2s ease infinite;
+  }
+
+  .scroll-hint-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--amber), transparent);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.25rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(10,7,4,0.9), transparent);
+    backdrop-filter: blur(4px);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--cream);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-logo span { color: var(--rust); }
+
+  .cart-btn {
+    background: var(--rust);
+    border: none;
+    color: var(--cream);
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.2s;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+
+  .cart-btn:hover { background: var(--amber); }
+
+  .cart-count {
+    background: var(--gold);
+    color: var(--black);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 5rem 2rem; }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    color: var(--cream);
+  }
+
+  /* ── MENU SECTION ── */
+  #menu {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .menu-header {
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2rem;
+  }
+
+  .divider-line {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(to right, var(--rust), var(--amber));
+    margin: 1rem 0;
+  }
+
+  .menu-filter {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.4rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .filter-btn.active, .filter-btn:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+    background: rgba(232,137,26,0.06);
+  }
+
+  /* ── MENU GRID ── */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .menu-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+    overflow: hidden;
+    cursor: default;
+  }
+
+  .menu-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--rust), var(--amber));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .menu-card:hover {
+    border-color: rgba(232,137,26,0.5);
+    transform: translateY(-4px);
+  }
+
+  .menu-card:hover::before { transform: scaleX(1); }
+
+  .menu-card-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .menu-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+
+  .menu-card-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--amber);
+    letter-spacing: 0.05em;
+  }
+
+  .menu-card-price span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0;
+  }
+
+  .add-to-cart {
+    width: 100%;
+    margin-top: 1.25rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--cream);
+    padding: 0.65rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .add-to-cart:hover {
+    background: var(--rust);
+    border-color: var(--rust);
+  }
+
+  .add-to-cart.added {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--black);
+  }
+
+  /* ── CART SIDEBAR ── */
+  .cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .cart-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(420px, 100vw);
+    background: var(--deep);
+    border-left: 1px solid var(--border);
+    z-index: 201;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-sidebar.open { transform: translateX(0); }
+
+  .cart-head {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cart-head h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+    color: var(--cream);
+  }
+
+  .close-cart {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--cream);
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s;
+  }
+
+  .close-cart:hover { border-color: var(--rust); color: var(--rust); }
+
+  .cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 1.5rem;
+  }
+
+  .cart-items::-webkit-scrollbar { width: 4px; }
+  .cart-items::-webkit-scrollbar-track { background: transparent; }
+  .cart-items::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .cart-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .cart-empty span { display: block; font-size: 3rem; margin-bottom: 1rem; }
+
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cart-item-info { flex: 1; }
+
+  .cart-item-name {
+    font-size: 0.9rem;
+    color: var(--cream);
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+  }
+
+  .cart-item-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    color: var(--amber);
+  }
+
+  .qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .qty-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--cream);
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s;
+  }
+
+  .qty-btn:hover { border-color: var(--amber); color: var(--amber); }
+
+  .qty-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .cart-footer {
+    padding: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .cart-total-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .cart-total-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--amber);
+  }
+
+  /* Order form */
+  .order-form { margin-bottom: 1rem; }
+
+  .order-input {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--cream);
+    padding: 0.75rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .order-input:focus { border-color: var(--amber); }
+  .order-input::placeholder { color: var(--muted); }
+
+  .whatsapp-btn {
+    width: 100%;
+    background: #25D366;
+    border: none;
+    color: white;
+    padding: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: background 0.2s, transform 0.2s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .whatsapp-btn:hover { background: #128C7E; transform: translateY(-2px); }
+
+  .whatsapp-btn svg { width: 22px; height: 22px; }
+
+  /* ── ABOUT STRIP ── */
+  .about-strip {
+    background: linear-gradient(135deg, var(--rust) 0%, var(--amber) 100%);
+    padding: 4rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-strip::before {
+    content: 'SOUL&SPICE';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20vw;
+    color: rgba(0,0,0,0.08);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    letter-spacing: -0.02em;
+    pointer-events: none;
+  }
+
+  .about-strip h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--black);
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  .about-strip p {
+    font-size: 0.95rem;
+    color: rgba(10,7,4,0.7);
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--cream);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-logo span { color: var(--rust); }
+
+  .footer-sub {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .footer-info {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .footer-info-item {
+    text-align: center;
+  }
+
+  .footer-info-item .label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .footer-info-item .value {
+    font-size: 0.9rem;
+    color: var(--cream);
+  }
+
+  .footer-copy {
+    font-size: 0.7rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+    margin-top: 1rem;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--rust);
+    color: var(--cream);
+    padding: 0.75rem 1.5rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    z-index: 500;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .menu-grid { grid-template-columns: 1fr; }
+    .menu-header { flex-direction: column; align-items: flex-start; }
+    nav { padding: 1rem; }
+    section { padding: 4rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">SOUL<span>&</span>SPICE</a>
+  <button class="cart-btn" onclick="openCart()">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    Cart
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-spice-ring"></div>
+  <p class="hero-tag">🌶 Authentic Nigerian Kitchen</p>
+  <h1 class="hero-title">
+    SOUL<span class="hero-amp">&</span>
+    <span>SPICE</span>
+  </h1>
+  <p class="hero-sub">Where every bite tells a story</p>
+  <div class="hero-location">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    Anambra State University · Uli Campus
+  </div>
+  <div class="hero-cta">
+    <a href="#menu" class="btn-primary">Order Now</a>
+    <a href="#" class="btn-ghost" onclick="openCart(); return false;">View Cart</a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-hint-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<div class="about-strip">
+  <h2>Made fresh. Served with love.</h2>
+  <p>From smoky jollof rice to silky yamarita, every plate at Soul&amp;Spice is cooked to perfection right here on campus. Place your order and get it delivered straight to you.</p>
+</div>
+
+<!-- MENU -->
+<section>
+  <div id="menu">
+    <div class="menu-header">
+      <div>
+        <p class="section-label">What we're cooking</p>
+        <h2 class="section-title">Our Menu</h2>
+        <div class="divider-line"></div>
+      </div>
+      <div class="menu-filter">
+        <button class="filter-btn active" onclick="filterMenu('all', this)">All</button>
+        <button class="filter-btn" onclick="filterMenu('rice', this)">Rice</button>
+        <button class="filter-btn" onclick="filterMenu('spaghetti', this)">Spaghetti</button>
+        <button class="filter-btn" onclick="filterMenu('other', this)">More</button>
+      </div>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">SOUL<span>&</span>SPICE</div>
+  <p class="footer-sub">Authentic Nigerian Kitchen</p>
+  <div class="footer-info">
+    <div class="footer-info-item">
+      <div class="label">Location</div>
+      <div class="value">Anambra State University, Uli Campus</div>
+    </div>
+    <div class="footer-info-item">
+      <div class="label">Order via</div>
+      <div class="value">WhatsApp: 09123264034</div>
+    </div>
+    <div class="footer-info-item">
+      <div class="label">Hours</div>
+      <div class="value">Mon–Sat · 8am – 8pm</div>
+    </div>
+  </div>
+  <p class="footer-copy">© 2026 Soul&amp;Spice · All rights reserved</p>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-head">
+    <h2>Your Order</h2>
+    <button class="close-cart" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty"><span>🍽</span>Your cart is empty.<br>Add something delicious!</div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-amount" id="cartTotal">₦0</span>
+    </div>
+    <div class="order-form">
+      <input type="text" class="order-input" id="customerName" placeholder="Your name (required)" />
+      <input type="text" class="order-input" id="deliveryLocation" placeholder="Delivery location on campus (optional)" />
+    </div>
+    <button class="whatsapp-btn" onclick="sendToWhatsApp()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Send Order via WhatsApp
+    </button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  const WHATSAPP_NUMBER = '2349123264034';
+
+  const menuItems = [
+    { id: 1, name: 'Jollof Rice & Beef with Plantain', price: 2500, emoji: '🍛', category: 'rice' },
+    { id: 2, name: 'Jollof Rice & Chicken', price: 4000, emoji: '🍗', category: 'rice' },
+    { id: 3, name: 'Jollof Rice & Chicken with Plantain', price: 4500, emoji: '🍽', category: 'rice' },
+    { id: 4, name: 'Mishai Regular', price: 2500, emoji: '🥘', category: 'other' },
+    { id: 5, name: 'Mishai Exclusive', price: 3500, emoji: '✨', category: 'other' },
+    { id: 6, name: 'Stir Fry Spaghetti with Chicken', price: 5000, emoji: '🍝', category: 'spaghetti' },
+    { id: 7, name: 'Stir Fry Spaghetti with Beef', price: 3000, emoji: '🍜', category: 'spaghetti' },
+    { id: 8, name: 'Yam & Egg Sauce', price: 3500, emoji: '🥚', category: 'other' },
+    { id: 9, name: 'Yamarita Set with Chicken & Plantain', price: 7000, emoji: '👑', category: 'other' },
+    { id: 10, name: 'Fried Rice & Chicken', price: 4500, emoji: '🍚', category: 'rice' },
+    { id: 11, name: 'Fried Rice & Beef', price: 3000, emoji: '🥩', category: 'rice' },
+  ];
+
+  let cart = [];
+  let activeFilter = 'all';
+
+  function renderMenu(filter = 'all') {
+    const grid = document.getElementById('menuGrid');
+    const filtered = filter === 'all' ? menuItems : menuItems.filter(i => i.category === filter);
+    grid.innerHTML = filtered.map(item => `
+      <div class="menu-card" data-category="${item.category}">
+        <span class="menu-card-emoji">${item.emoji}</span>
+        <div class="menu-card-name">${item.name}</div>
+        <div class="menu-card-price">₦${item.price.toLocaleString()} <span>NGN</span></div>
+        <button class="add-to-cart" id="btn-${item.id}" onclick="addToCart(${item.id})">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add to Cart
+        </button>
+      </div>
+    `).join('');
+  }
+
+  function filterMenu(filter, btn) {
+    activeFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderMenu(filter);
+  }
+
+  function addToCart(id) {
+    const item = menuItems.find(i => i.id === id);
+    const existing = cart.find(c => c.id === id);
+    if (existing) {
+      existing.qty++;
+    } else {
+      cart.push({ ...item, qty: 1 });
+    }
+    updateCartUI();
+    showToast(`${item.emoji} ${item.name.split(' ').slice(0,3).join(' ')} added!`);
+
+    const btn = document.getElementById(`btn-${id}`);
+    if (btn) {
+      btn.classList.add('added');
+      btn.innerHTML = `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Added!`;
+      setTimeout(() => {
+        btn.classList.remove('added');
+        btn.innerHTML = `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add to Cart`;
+      }, 1500);
+    }
+  }
+
+  function updateQty(id, delta) {
+    const item = cart.find(c => c.id === id);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+    const count = cart.reduce((sum, i) => sum + i.qty, 0);
+
+    document.getElementById('cartCount').textContent = count;
+    document.getElementById('cartTotal').textContent = `₦${total.toLocaleString()}`;
+
+    const container = document.getElementById('cartItems');
+    if (cart.length === 0) {
+      container.innerHTML = `<div class="cart-empty"><span>🍽</span>Your cart is empty.<br>Add something delicious!</div>`;
+      return;
+    }
+
+    container.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.emoji} ${item.name}</div>
+          <div class="cart-item-price">₦${(item.price * item.qty).toLocaleString()}</div>
+        </div>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="updateQty(${item.id}, -1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="updateQty(${item.id}, +1)">+</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function openCart() {
+    document.getElementById('cartOverlay').classList.add('open');
+    document.getElementById('cartSidebar').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCart() {
+    document.getElementById('cartOverlay').classList.remove('open');
+    document.getElementById('cartSidebar').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function sendToWhatsApp() {
+    if (cart.length === 0) {
+      showToast('⚠ Your cart is empty!');
+      return;
+    }
+    const name = document.getElementById('customerName').value.trim();
+    if (!name) {
+      showToast('Please enter your name!');
+      document.getElementById('customerName').focus();
+      return;
+    }
+    const location = document.getElementById('deliveryLocation').value.trim();
+    const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+
+    let msg = `🍽 *SOUL&SPICE ORDER*\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `👤 *Name:* ${name}\n`;
+    if (location) msg += `📍 *Location:* ${location}\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `*ORDER ITEMS:*\n`;
+    cart.forEach(item => {
+      msg += `${item.emoji} ${item.name}\n   Qty: ${item.qty} × ₦${item.price.toLocaleString()} = ₦${(item.price * item.qty).toLocaleString()}\n`;
+    });
+    msg += `━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `💰 *TOTAL: ₦${total.toLocaleString()}*\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `📍 Anambra State University, Uli Campus`;
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  // Init
+  renderMenu();
+</script>
+</body>
+</html>
